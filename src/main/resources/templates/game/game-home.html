@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="frags :: head"></head>
+<body class="container">
+    <nav th:replace="frags :: nav"></nav>
+    <h1 th:text="${title}">Default</h1>
+    <form method="post">
+        <div class="form-group">
+            <label for="numTeams">How many teams will be playing?</label>
+            <input class="form-control" type="number" id="numTeams" name="numberTeams" max="4" value="2"/>
+        </div>
+        <div class="form-group">
+            <label for="numGames">How many regular season games will be played?</label>
+            <input class="form-control" type="number" id="numGames" name="seasonGames" value="10"/>
+        </div>
+        <div class="form-group">
+            <label for="numPlayoff">How many wins are needed to win a playoff series?</label>
+            <input class="form-control" type="number" id="numPlayoff" name="playoffGames" value="4"/>
+        </div>
+        <button class="btn btn-default">
+            <label>Click to play!</label>
+            <img th:src="@{/images/mj.gif}" alt="Button Image" width="200" height="150"/>
+        </button>
+    </form>
+
+
+</body>
+<footer th:replace="frags :: footer"></footer>
+</html>
