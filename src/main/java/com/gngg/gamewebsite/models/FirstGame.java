@@ -1,48 +1,85 @@
 package com.gngg.gamewebsite.models;
 
-import java.util.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
-public class FirstGame extends Game{
-    private int mNumRegularGames;
-    private int mNumPlayoffGames;
-    private Map<String, Integer> mTeamWins = new HashMap<>();
-    private Map<String, Integer> mTeamLoses = new HashMap<>();
-    private List<String> mCategories = new ArrayList<>();
+public class FirstGame{
+    @NotNull(message = "Must enter a number")
+    @Min(value = 1, message = "Must have a value greater than 0")
+    private Integer numRegularGames;
+    @NotNull(message = "Must enter a number")
+    @Min(value = 1, message = "Must have a value greater than 0")
+    private Integer numPlayoffGames;
+    @NotNull(message = "Must enter a number")
+    @Min(value = 2, message = "Must have a value greater than 2")
+    @Max(value = 4, message = "No more than 4 teams allowed")
+    private Integer numTeams;
+    private Team[] teams;
+    private Categories category = Categories.CreativeCat;
 
-    public FirstGame(String name, int numTeams, List<String> teamNames, int numRegularGames, int numPlayoffGames) {
-        super(name, numTeams, teamNames);
-        mNumRegularGames = numRegularGames;
-        mNumPlayoffGames = numPlayoffGames;
-        for(String team : teamNames){
-            mTeamWins.put(team, 0);
+    public FirstGame() {
+        this(2, 10, 4);
+    }
+
+    public FirstGame(int numTeams, int numRegularGames, int numPlayoffGames) {
+        this.numTeams = numTeams;
+        this.numRegularGames = numRegularGames;
+        this.numPlayoffGames = numPlayoffGames;
+        teams = new Team[this.numTeams];
+        for(int i = 0; i < this.numTeams; i++){
+            teams[i] = (new Team(String.format("Team %s", i + 1)));
         }
-        mCategories.add("Creative Cat");
-        mCategories.add("Star Performer");
-        mCategories.add("Taboo");
-        mCategories.add("Trivia Pursuit");
-        mCategories.add("Guesstures");
     }
 
-    public int getNumRegularGames() {
-        return mNumRegularGames;
+    public void setNumRegularGames(Integer numRegularGames) {
+        this.numRegularGames = numRegularGames;
     }
 
-    public int getNumPlayoffGames() {
-        return mNumPlayoffGames;
+    public void setNumPlayoffGames(Integer numPlayoffGames) {
+        this.numPlayoffGames = numPlayoffGames;
+    }
+
+    public void setNumTeams(Integer numTeams) {
+        teams = new Team[this.numTeams];
+        for(int i = 0; i < this.numTeams; i++){
+            teams[i] = (new Team(String.format("Team %s", i + 1)));
+        }
+        this.numTeams = numTeams;
+    }
+
+    public Integer getNumRegularGames() {
+        return numRegularGames;
+    }
+
+    public Integer getNumPlayoffGames() {
+        return numPlayoffGames;
+    }
+
+    public Integer getNumTeams() {
+        return numTeams;
+    }
+
+    public List<String> getTeamsNames() {
+        List<String> list = new ArrayList<>();
+        for(Team t : teams)
+            list.add(t.getName());
+        return list;
     }
 
     public String getRandomCategory(){
-        Random rand = new Random();
-        int index = rand.nextInt(mCategories.size() - 1);
-        return mCategories.get(index);
+        category = category.getRandomName();
+        return  category.getName();
     }
 
     public void gameResult(String teamName, boolean didWin){
-        if(didWin){
-            mTeamWins.put(teamName, mTeamWins.get(teamName) + 1);
-        }
-        else{
-            mTeamLoses.put(teamName, mTeamLoses.get(teamName) + 1);
+        for(Team t : teams){
+            if(t.getName().equals(teamName)){
+                t.incrementWinOrLoss(didWin);
+                return;
+            }
         }
     }
 
@@ -52,23 +89,26 @@ public class FirstGame extends Game{
     }
 
     public void resetWinLossValues(){
-        for(String team : super.getTeamNames()){
-            mTeamWins.put(team, 0);
-            mTeamLoses.put(team, 0);
+        for(Team t : teams){
+            t.setLoses(0);
+            t.setWins(0);
         }
     }
 
     public boolean isSeasonComplete(){
-        for(String team : super.getTeamNames()) {
-            if (mTeamLoses.get(team) + mTeamWins.get(team) < mNumRegularGames)
+        for(Team t : teams){
+            if(t.getLoses() + t.getWins() < numRegularGames)
                 return false;
         }
         return true;
     }
 
-    public boolean isPlayoffSeriesComplete(String team1, String team2){
-        if(mTeamWins.get(team1) >= mNumPlayoffGames || mTeamWins.get(team2) >= mNumPlayoffGames)
-            return true;
-        return false;
+    public String winnerPlayoffSeries(String team1, String team2){
+        for(Team t : teams){
+            if(t.getName().equals(team1) || t.getName().equals(team2)){
+                if(t.getWins() >= numPlayoffGames) return t.getName();
+            }
+        }
+        return null;
     }
 }

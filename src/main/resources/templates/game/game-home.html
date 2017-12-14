@@ -4,26 +4,31 @@
 <body class="container">
     <nav th:replace="frags :: nav"></nav>
     <h1 th:text="${title}">Default</h1>
-    <form method="post">
+    <form method="post" th:object="${firstGame}">
         <div class="form-group">
-            <label for="numTeams">How many teams will be playing?</label>
-            <input class="form-control" type="number" id="numTeams" name="numberTeams" max="4" value="2"/>
+            <label th:for="numTeams">How many teams will be playing?</label>
+            <select class="form-control form-control-lg" th:field="*{numTeams}">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+            <span th:errors="*{numTeams}" class="alert alert-warning"></span>
         </div>
         <div class="form-group">
-            <label for="numGames">How many regular season games will be played?</label>
-            <input class="form-control" type="number" id="numGames" name="seasonGames" value="10"/>
+            <label th:for="numRegularGames">How many regular season games will be played?</label>
+            <input class="form-control form-control-lg" th:field="*{numRegularGames}"/>
+            <span th:errors="*{numRegularGames}" class="alert alert-warning"></span>
         </div>
         <div class="form-group">
-            <label for="numPlayoff">How many wins are needed to win a playoff series?</label>
-            <input class="form-control" type="number" id="numPlayoff" name="playoffGames" value="4"/>
+            <label th:for="numPlayoffGames">How many wins are needed to win a playoff series?</label>
+            <input class="form-control form-control-lg" th:field="*{numPlayoffGames}"/>
+            <span th:errors="*{numPlayoffGames}" class="alert alert-warning"></span>
         </div>
         <button class="btn btn-default">
             <label>Click to play!</label>
             <img th:src="@{/images/mj.gif}" alt="Button Image" width="200" height="150"/>
         </button>
     </form>
-
-
 </body>
 <footer th:replace="frags :: footer"></footer>
 </html>
