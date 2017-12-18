@@ -24,7 +24,7 @@ public enum  Categories {
     Categories getRandomName() {
         Random rand = new Random();
         Categories[] names = this.values();
-        int index = rand.nextInt(names.length - 1);
+        int index = rand.nextInt(names.length);
         return names[index];
     }
 }

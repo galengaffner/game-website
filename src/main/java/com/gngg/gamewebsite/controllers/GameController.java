@@ -7,6 +7,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -36,11 +37,50 @@ public class GameController {
     @RequestMapping(value = "season-page", method = RequestMethod.GET)
     public String regularSeasonGet(Model model){
         model.addAttribute("title", "Regular Season");
+        model.addAttribute(game);
+        model.addAttribute("showCategory", false);
         return "game/season-page";
     }
 
     @RequestMapping(value = "season-page", method = RequestMethod.POST)
-    public String regularSeasonPost(){
+    public String regularSeasonPost(Model model, @RequestParam("btn") String btnID,
+                                    @RequestParam("win") boolean win){
+
+        if(btnID.equals("category")){
+            model.addAttribute("showCategory", true);
+            model.addAttribute("category", game.getRandomCategory());
+        }
+        else{
+            this.game.gameResult(btnID, win);
+            if(game.isSeasonComplete()){
+                game.createPlayoffMatchups();
+                return "redirect:/game/break-page";
+            }
+        }
+        model.addAttribute("title", "Regular Season");
+        model.addAttribute(game);
         return "game/season-page";
+    }
+
+    @RequestMapping(value = "break-page", method = RequestMethod.GET)
+    public String breakGet(Model model){
+        model.addAttribute("title", "Break Time");
+        return "game/break-page";
+    }
+
+    @RequestMapping(value = "playoff-page", method = RequestMethod.GET)
+    public String playoffGet(Model model){
+        model.addAttribute("title", "Regular Season");
+        model.addAttribute(game);
+        return "game/playoff-page";
+    }
+
+    @RequestMapping(value = "playoff-page", method = RequestMethod.POST)
+    public String playoffPost(){
+//        String winner = game.winnerPlayoffSeries();
+//        if(winner != null && game.getNumTeams() == 2){
+//            return "game/winner-page";
+//        }
+        return "game/playoff-page";
     }
 }

@@ -1,9 +1,52 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="frags :: head"></head>
-<body>
-
-
+<body class="bg">
+    <nav th:replace="frags :: nav"></nav>
+    <h1 th:text="${title}" class="text-center" style="margin-top:10px">Default</h1>
+    <div class="container" style="margin-top:10px">
+        <div class="row justify-content-center">
+            <table class="table" style="width:75%">
+                <thead>
+                    <tr>
+                        <th scope="col">Team Name</th>
+                        <th class="text-center" scope="col">Wins</th>
+                        <th class="text-center" scope="col">Losses</th>
+                        <th class="text-center" scope="col">Add Win</th>
+                        <th class="text-center" scope="col">Add Loss</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="team: ${firstGame.teams}">
+                        <td th:text="${team.name}"></td>
+                        <td class="text-center" th:text="${team.wins}"></td>
+                        <td class="text-center" th:text="${team.losses}"></td>
+                        <td class="text-center">
+                            <form method="post">
+                                <input type="hidden" th:name="win" th:value="true"/>
+                                <button class="btn btn-dark" th:name="btn" th:value="${team.name}">+</button>
+                            </form>
+                        </td>
+                        <td class="text-center">
+                            <form method="post">
+                                <input type="hidden" th:name="win" th:value="false"/>
+                                <button class="btn btn-dark" th:name="btn" th:value="${team.name}">+</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row justify-content-center">
+            <form method="post">
+                <input type="hidden" th:name="win" th:value="false"/>
+                <button class="btn btn-dark" th:name="btn" th:value="category">Next Category</button>
+            </form>
+        </div>
+        <div class="row justify-content-center" style="margin-top:20px">
+            <h3 th:hide="${showCategory}" th:text="${category}"></h3>
+        </div>
+    </div>
+    <footer th:replace="frags :: footer"></footer>
 </body>
-<footer th:replace="frags :: footer"></footer>
 </html>

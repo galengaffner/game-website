@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="frags :: head"></head>
-<body class="container">
+<body class="bg">
     <nav th:replace="frags :: nav"></nav>
-    <a href="/game" class="btn btn-success" role="button">Click to start a new game!</a>
+    <div class="container text-center" style="margin-top:20px">
+        <a href="/game" class="btn btn-dark" role="button">Click to start a new game!</a>
+    </div>
+    <footer th:replace="frags :: footer"></footer>
 </body>
-<footer th:replace="frags :: footer"></footer>
 </html>

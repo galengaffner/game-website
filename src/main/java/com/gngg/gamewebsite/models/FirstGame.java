@@ -17,7 +17,7 @@ public class FirstGame{
     @Min(value = 2, message = "Must have a value greater than 2")
     @Max(value = 4, message = "No more than 4 teams allowed")
     private Integer numTeams;
-    private Team[] teams;
+    private List<Team> teams;
     private Categories category = Categories.CreativeCat;
 
     public FirstGame() {
@@ -28,9 +28,9 @@ public class FirstGame{
         this.numTeams = numTeams;
         this.numRegularGames = numRegularGames;
         this.numPlayoffGames = numPlayoffGames;
-        teams = new Team[this.numTeams];
+        teams = new ArrayList<>();
         for(int i = 0; i < this.numTeams; i++){
-            teams[i] = (new Team(String.format("Team %s", i + 1)));
+            teams.add(new Team(String.format("Team %s", i + 1)));
         }
     }
 
@@ -43,11 +43,11 @@ public class FirstGame{
     }
 
     public void setNumTeams(Integer numTeams) {
-        teams = new Team[this.numTeams];
-        for(int i = 0; i < this.numTeams; i++){
-            teams[i] = (new Team(String.format("Team %s", i + 1)));
-        }
         this.numTeams = numTeams;
+        teams = new ArrayList<>();
+        for(int i = 0; i < this.numTeams; i++){
+            teams.add(new Team(String.format("Team %s", i + 1)));
+        }
     }
 
     public Integer getNumRegularGames() {
@@ -62,12 +62,7 @@ public class FirstGame{
         return numTeams;
     }
 
-    public List<String> getTeamsNames() {
-        List<String> list = new ArrayList<>();
-        for(Team t : teams)
-            list.add(t.getName());
-        return list;
-    }
+    public List<Team> getTeams() { return teams; }
 
     public String getRandomCategory(){
         category = category.getRandomName();
@@ -77,7 +72,9 @@ public class FirstGame{
     public void gameResult(String teamName, boolean didWin){
         for(Team t : teams){
             if(t.getName().equals(teamName)){
-                t.incrementWinOrLoss(didWin);
+                if(t.getWins() + t.getLosses() < numRegularGames) {
+                    t.incrementWinOrLoss(didWin);
+                }
                 return;
             }
         }
@@ -88,19 +85,21 @@ public class FirstGame{
         gameResult(vsName, !didWin);
     }
 
-    public void resetWinLossValues(){
-        for(Team t : teams){
-            t.setLoses(0);
-            t.setWins(0);
-        }
-    }
-
     public boolean isSeasonComplete(){
         for(Team t : teams){
-            if(t.getLoses() + t.getWins() < numRegularGames)
+            if(t.getLosses() + t.getWins() < numRegularGames) {
                 return false;
+            }
         }
         return true;
+    }
+
+    public void createPlayoffMatchups(){
+
+    }
+
+    public void advancePlayoffs(){
+
     }
 
     public String winnerPlayoffSeries(String team1, String team2){

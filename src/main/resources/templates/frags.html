@@ -3,21 +3,22 @@
 <head th:fragment="head">
     <meta charset="UTF-8"/>
     <title th:text="${title}">Always the header</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" style="text/css" href="../css/styles.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"/>
 </head>
 <body>
-<nav th:fragment="nav" class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
-        </ul>
-    </div>
+<nav th:fragment="nav" class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="/">Home</a>
+        </li>
+    </ul>
 </nav>
 
-</body>
-<footer th:fragment="footer" class="navbar-default navbar-fixed-bottom">
-    <div class="container-fluid">
-        <span>Created by Grapp-n-Gaff Co.</span>
+<footer th:fragment="footer" class="foot">
+    <div class="container text-center">
+        <span class="text-muted">Created by Grapp-n-Gaff Co.</span>
     </div>
 </footer>
+</body>
 </html>
