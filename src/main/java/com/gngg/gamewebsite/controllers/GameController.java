@@ -1,6 +1,7 @@
 package com.gngg.gamewebsite.controllers;
 
 import com.gngg.gamewebsite.models.FirstGame;
+import com.gngg.gamewebsite.models.Team;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -51,9 +52,7 @@ public class GameController {
             model.addAttribute("category", game.getRandomCategory());
         }
         else{
-            this.game.gameResult(btnID, win);
-            if(game.isSeasonComplete()){
-                game.createPlayoffMatchups();
+            if(game.gameResult(btnID, win)){
                 return "redirect:/game/break-page";
             }
         }
@@ -70,17 +69,24 @@ public class GameController {
 
     @RequestMapping(value = "playoff-page", method = RequestMethod.GET)
     public String playoffGet(Model model){
-        model.addAttribute("title", "Regular Season");
+        model.addAttribute("title", "Playoffs");
         model.addAttribute(game);
         return "game/playoff-page";
     }
 
     @RequestMapping(value = "playoff-page", method = RequestMethod.POST)
-    public String playoffPost(){
-//        String winner = game.winnerPlayoffSeries();
-//        if(winner != null && game.getNumTeams() == 2){
-//            return "game/winner-page";
-//        }
+    public String playoffPost(Model model, @RequestParam("btn") String btnID,
+                              @RequestParam("win") boolean win){
+        if(game.updatePlayoffMatchup(btnID, win)){
+            return "redirect:/game/winner-page";
+        }
         return "game/playoff-page";
+    }
+
+    @RequestMapping(value = "winner-page", method = RequestMethod.GET)
+    public String winnerPageGet(Model model){
+        model.addAttribute("title", "Champion!");
+        model.addAttribute(game);
+        return "game/winner-page";
     }
 }

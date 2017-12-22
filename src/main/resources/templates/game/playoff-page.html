@@ -1,10 +1,148 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title></title>
-</head>
-<body>
-
+<head th:replace="frags :: head"></head>
+<body class="bg">
+    <nav th:replace="frags :: nav"></nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3">
+                <div th:each="matchup : ${firstGame.playoffMatchups}" th:if="${matchup.round} == 1">
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="width:10%">
+                                    <span class="font-weight-bold" style="font-size:8pt" th:text="${matchup.team1.playoffSeed}"></span>
+                                </span>
+                                <div class="form-control" th:text="${matchup.team1.name}"></div>
+                                <span class="input-group-addon" style="width:10%">
+                                    <span class="font-weight-bold" style="font-size:10pt" th:text="${matchup.team1.playoffWins}"></span>
+                                </span>
+                                <span class="input-group-btn">
+                                    <form class="btn-group-vertical" method="post">
+                                        <button type="button" class="btn btn-dark" style="padding:0;">+</button>
+                                        <button type="button" class="btn btn-dark" style="padding:0">-</button>
+                                    </form>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-bottom:20px">
+                        <div class="col">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="width:10%">
+                                    <span class="font-weight-bold" style="font-size:8pt" th:text="${matchup.team2.playoffSeed}"></span>
+                                </span>
+                                <div class="form-control" th:text="${matchup.team2.name}"></div>
+                                <span class="input-group-addon" style="width:10%">
+                                    <span class="font-weight-bold" style="font-size:10pt" th:text="${matchup.team2.playoffWins}"></span>
+                                </span>
+                                <span class="input-group-btn">
+                                    <form class="btn-group-vertical" method="post">
+                                        <button type="button" class="btn btn-dark" style="padding:0;">+</button>
+                                        <button type="button" class="btn btn-dark" style="padding:0">-</button>
+                                    </form>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-3">
+                <div th:each="matchup : ${firstGame.playoffMatchups}" th:if="${matchup.round} == 2">
+                    <div class="row" style="margin-top:25px">
+                        <div class="col">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="width:10%">
+                                    <span class="font-weight-bold" style="font-size:8pt" th:if="${matchup.team1} != null" th:text="${matchup.team1.playoffSeed}"></span>
+                                </span>
+                                <div class="form-control">
+                                    <div th:if="${matchup.team1} != null" th:text="${matchup.team1.name}"></div>
+                                </div>
+                                <span class="input-group-addon" style="width:10%">
+                                    <span class="font-weight-bold" style="font-size:10pt" th:if="${matchup.team1} != null" th:text="${matchup.team1.playoffWins}"></span>
+                                </span>
+                                <span class="input-group-btn">
+                                    <form class="btn-group-vertical" method="post">
+                                        <button type="button" class="btn btn-dark" style="padding:0;">+</button>
+                                        <button type="button" class="btn btn-dark" style="padding:0">-</button>
+                                    </form>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:70px;margin-bottom:70px">
+                        <div class="col">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="width:10%">
+                                    <span class="font-weight-bold" style="font-size:8pt" th:if="${matchup.team2} != null" th:text="${matchup.team2.playoffSeed}"></span>
+                                </span>
+                                <div class="form-control">
+                                    <div th:if="${matchup.team2} != null" th:text="${matchup.team2.name}"></div>
+                                </div>
+                                <span class="input-group-addon" style="width:10%">
+                                    <span class="font-weight-bold" style="font-size:10pt" th:if="${matchup.team2} != null" th:text="${matchup.team2.playoffWins}"></span>
+                                </span>
+                                <span class="input-group-btn">
+                                    <form class="btn-group-vertical" method="post">
+                                        <button type="button" class="btn btn-dark" style="padding:0;">+</button>
+                                        <button type="button" class="btn btn-dark" style="padding:0">-</button>
+                                    </form>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-3">
+                <div th:each="matchup : ${firstGame.playoffMatchups}" th:if="${matchup.round} == 3">
+                    <div class="row" style="margin-top:85px">
+                        <div class="col">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="width:10%">
+                                    <span class="font-weight-bold" style="font-size:8pt" th:if="${matchup.team1} != null" th:text="${matchup.team1.playoffSeed}"></span>
+                                </span>
+                                <div class="form-control">
+                                    <div th:if="${matchup.team1} != null" th:text="${matchup.team1.name}"></div>
+                                </div>
+                                <span class="input-group-addon" style="width:10%">
+                                    <span class="font-weight-bold" style="font-size:10pt" th:if="${matchup.team1} != null" th:text="${matchup.team1.playoffWins}"></span>
+                                </span>
+                                <span class="input-group-btn">
+                                    <form class="btn-group-vertical" method="post">
+                                        <button type="button" class="btn btn-dark" style="padding:0;">+</button>
+                                        <button type="button" class="btn btn-dark" style="padding:0">-</button>
+                                    </form>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:190px">
+                        <div class="col">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="width:10%">
+                                    <span class="font-weight-bold" style="font-size:8pt" th:if="${matchup.team2} != null" th:text="${matchup.team2.playoffSeed}"></span>
+                                </span>
+                                <div class="form-control">
+                                    <div th:if="${matchup.team2} != null" th:text="${matchup.team2.name}"></div>
+                                </div>
+                                <span class="input-group-addon" style="width:10%">
+                                    <span class="font-weight-bold" style="font-size:10pt" th:if="${matchup.team2} != null" th:text="${matchup.team2.playoffWins}"></span>
+                                </span>
+                                <span class="input-group-btn">
+                                    <form class="btn-group-vertical" method="post">
+                                        <button type="button" class="btn btn-dark" style="padding:0;">+</button>
+                                        <button type="button" class="btn btn-dark" style="padding:0">-</button>
+                                    </form>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="frags :: footer"></footer>
 </body>
 </html>

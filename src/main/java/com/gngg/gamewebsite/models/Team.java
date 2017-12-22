@@ -57,12 +57,15 @@ public class Team {
         isEliminated = eliminated;
     }
 
-    public void incrementWinOrLoss(boolean didWin){
-       if(didWin) wins++;
-       else losses++;
+    public void incrementWinOrLoss(boolean didWin, Integer total){
+        if(wins + losses < total) {
+            if (didWin) wins++;
+            else losses++;
+        }
     }
 
-    public void incrementPlayoffWinOrLoss(boolean didWin){
-        if(didWin) playoffWins++;
+    public void incrementPlayoffWinOrLoss(boolean didWin, Integer needed){
+        if(playoffWins < needed && didWin) playoffWins++;
+        else if(playoffWins > 0 && !didWin) playoffWins--;
     }
 }
