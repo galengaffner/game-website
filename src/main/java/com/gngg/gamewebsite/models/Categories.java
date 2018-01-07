@@ -9,7 +9,8 @@ public enum  Categories {
     Taboo("Taboo"),
     TriviaPursuit("Trivia Pursuit"),
     Guesstures("Guesstures"),
-    MovieQuote("Movie Quote");
+    MovieQuote("Movie Quote"),
+    Scattegories("Scattegories");
 
     private final String name;
 

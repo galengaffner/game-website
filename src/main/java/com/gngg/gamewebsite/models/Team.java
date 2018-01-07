@@ -7,7 +7,6 @@ public class Team {
     Integer wins = 0;
     Integer playoffWins = 0;
     Integer playoffSeed = 0;
-    boolean isEliminated = false;
 
     public Team(String name) {
         this.name = name;
@@ -31,10 +30,6 @@ public class Team {
         return playoffSeed;
     }
 
-    public boolean isEliminated() {
-        return isEliminated;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -53,10 +48,6 @@ public class Team {
         this.playoffSeed = playoffSeed;
     }
 
-    public void setEliminated(boolean eliminated) {
-        isEliminated = eliminated;
-    }
-
     public void incrementWinOrLoss(boolean didWin, Integer total){
         if(wins + losses < total) {
             if (didWin) wins++;
@@ -66,6 +57,6 @@ public class Team {
 
     public void incrementPlayoffWinOrLoss(boolean didWin, Integer needed){
         if(playoffWins < needed && didWin) playoffWins++;
-        else if(playoffWins > 0 && !didWin) playoffWins--;
+        else if(playoffWins > 0 && playoffWins < needed && !didWin) playoffWins--;
     }
 }

@@ -69,6 +69,8 @@ public class FirstGame{
 
     public List<Team> getTeams() { return teams; }
 
+    public void setTeams(List<Team> teams) { this.teams = teams; }
+
     public List<PlayoffMatchup> getPlayoffMatchups() { return playoffMatchups; }
 
     public String getRandomCategory(){
@@ -97,10 +99,53 @@ public class FirstGame{
     }
 
     public boolean updatePlayoffMatchup(String team, boolean didWin) {
-        for(Team t : teams){
-            if(t.name.equals(team)){
+        for (Team t : teams) {
+            if (t.name.equals(team)) {
                 t.incrementPlayoffWinOrLoss(didWin, numPlayoffGames);
                 break;
+            }
+        }
+        boolean ret = doWeHaveAWinner();
+        if(!ret) advancePlayoffs();
+        return ret;
+    }
+
+    private void advancePlayoffs(){
+        for (PlayoffMatchup matchup : playoffMatchups){
+            if(!matchup.isComplete()) {
+                Team t1 = matchup.getTeam1();
+                Team t2 = matchup.getTeam2();
+                if (t1 != null && t2 != null) {
+                    if (t1.playoffWins >= numPlayoffGames || t2.playoffWins >= numPlayoffGames) {
+                        matchup.setComplete(true);
+                        for (PlayoffMatchup m : playoffMatchups){
+                            if(m.getTeam1FromId() == matchup.getMatchupID()){
+                                m.setTeam1(t1.playoffWins > t2.playoffWins ? t1:t2);
+                            }
+                            else if(m.getTeam2FromId() == matchup.getMatchupID()){
+                                m.setTeam2(t1.playoffWins > t2.playoffWins ? t1:t2);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean doWeHaveAWinner(){
+        Team t1 = playoffMatchups.get(playoffMatchups.size() - 1).getTeam1();
+        Team t2 = playoffMatchups.get(playoffMatchups.size() - 1).getTeam2();
+        if(t1 == null || t2 == null){
+            return false;
+        }
+        else{
+            if(t1.playoffWins >= numPlayoffGames){
+                winner = t1;
+                return true;
+            }
+            else if(t2.playoffWins >= numPlayoffGames){
+                winner = t2;
+                return true;
             }
         }
         return false;
@@ -123,7 +168,6 @@ public class FirstGame{
         int seed = 1;
         for(Team t : teams){
             t.playoffSeed = seed;
-            t.isEliminated = false;
             seed++;
         }
 

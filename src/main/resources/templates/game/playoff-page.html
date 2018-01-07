@@ -19,8 +19,9 @@
                                 </span>
                                 <span class="input-group-btn">
                                     <form class="btn-group-vertical" method="post">
-                                        <button type="button" class="btn btn-dark" style="padding:0;">+</button>
-                                        <button type="button" class="btn btn-dark" style="padding:0">-</button>
+                                        <input type="hidden" th:name="btn" th:value="${matchup.team1.name}"/>
+                                        <button type="submit" class="btn btn-dark" style="padding:0;" th:name="win" th:value="true">+</button>
+                                        <button type="submit" class="btn btn-dark" style="padding:0" th:name="win" th:value="false">-</button>
                                     </form>
                                 </span>
                             </div>
@@ -38,8 +39,9 @@
                                 </span>
                                 <span class="input-group-btn">
                                     <form class="btn-group-vertical" method="post">
-                                        <button type="button" class="btn btn-dark" style="padding:0;">+</button>
-                                        <button type="button" class="btn btn-dark" style="padding:0">-</button>
+                                        <input type="hidden" th:name="btn" th:value="${matchup.team2.name}"/>
+                                        <button type="submit" class="btn btn-dark" style="padding:0;" th:name="win" th:value="true">+</button>
+                                        <button type="submit" class="btn btn-dark" style="padding:0" th:name="win" th:value="false">-</button>
                                     </form>
                                 </span>
                             </div>
@@ -64,8 +66,9 @@
                                 </span>
                                 <span class="input-group-btn">
                                     <form class="btn-group-vertical" method="post">
-                                        <button type="button" class="btn btn-dark" style="padding:0;">+</button>
-                                        <button type="button" class="btn btn-dark" style="padding:0">-</button>
+                                        <input type="hidden" th:if="${matchup.team1} != null" th:name="btn" th:value="${matchup.team1.name}"/>
+                                        <button type="submit" class="btn btn-dark" style="padding:0;" th:name="win" th:value="true">+</button>
+                                        <button type="submit" class="btn btn-dark" style="padding:0" th:name="win" th:value="false">-</button>
                                     </form>
                                 </span>
                             </div>
@@ -85,8 +88,9 @@
                                 </span>
                                 <span class="input-group-btn">
                                     <form class="btn-group-vertical" method="post">
-                                        <button type="button" class="btn btn-dark" style="padding:0;">+</button>
-                                        <button type="button" class="btn btn-dark" style="padding:0">-</button>
+                                        <input type="hidden" th:if="${matchup.team2} != null" th:name="btn" th:value="${matchup.team2.name}"/>
+                                        <button type="submit" class="btn btn-dark" style="padding:0;" th:name="win" th:value="true">+</button>
+                                        <button type="submit" class="btn btn-dark" style="padding:0" th:name="win" th:value="false">-</button>
                                     </form>
                                 </span>
                             </div>
@@ -111,8 +115,9 @@
                                 </span>
                                 <span class="input-group-btn">
                                     <form class="btn-group-vertical" method="post">
-                                        <button type="button" class="btn btn-dark" style="padding:0;">+</button>
-                                        <button type="button" class="btn btn-dark" style="padding:0">-</button>
+                                        <input type="hidden" th:if="${matchup.team1} != null" th:name="btn" th:value="${matchup.team1.name}"/>
+                                        <button type="submit" class="btn btn-dark" style="padding:0;" th:name="win" th:value="true">+</button>
+                                        <button type="submit" class="btn btn-dark" style="padding:0" th:name="win" th:value="false">-</button>
                                     </form>
                                 </span>
                             </div>
@@ -132,8 +137,9 @@
                                 </span>
                                 <span class="input-group-btn">
                                     <form class="btn-group-vertical" method="post">
-                                        <button type="button" class="btn btn-dark" style="padding:0;">+</button>
-                                        <button type="button" class="btn btn-dark" style="padding:0">-</button>
+                                        <input type="hidden" th:if="${matchup.team2} != null" th:name="btn" th:value="${matchup.team2.name}"/>
+                                        <button type="submit" class="btn btn-dark" style="padding:0;" th:name="win" th:value="true">+</button>
+                                        <button type="submit" class="btn btn-dark" style="padding:0" th:name="win" th:value="false">-</button>
                                     </form>
                                 </span>
                             </div>
@@ -142,6 +148,15 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row justify-content-center">
+        <form method="post">
+            <input type="hidden" th:name="win" th:value="false"/>
+            <button class="btn btn-dark" th:name="btn" th:value="category">Next Category</button>
+        </form>
+    </div>
+    <div class="row justify-content-center" style="margin-top:20px">
+        <h3 th:hide="${showCategory}" th:text="${category}"></h3>
     </div>
     <footer th:replace="frags :: footer"></footer>
 </body>

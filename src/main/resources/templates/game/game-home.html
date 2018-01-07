@@ -30,7 +30,7 @@
                         <input class="form-control" th:field="*{numPlayoffGames}"/>
                         <label th:errors="*{numPlayoffGames}" class="alert alert-warning" style="margin-bottom: 10px"></label>
                     </div>
-                    <button class="btn btn-dark" style="width:100%">
+                    <button type="submit" class="btn btn-dark" style="width:100%">
                         <label>Click to play!</label>
                         <img th:src="@{/images/mj.gif}" alt="Button Image" width="225" height="150"/>
                     </button>

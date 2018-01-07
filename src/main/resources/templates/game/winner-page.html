@@ -3,6 +3,10 @@
 <head th:replace="frags :: head"></head>
 <body class="bg">
     <nav th:replace="frags :: nav"></nav>
+    <h1 class="text-center" style="margin-top:10px;color:green" th:text="'Congrats, ' + ${firstGame.winner.name} + '!'"></h1>
+    <div class="row justify-content-center">
+        <img th:src="@{/images/larry.gif}" alt="Winner Image" width="700" height="500"/>
+    </div>
     <footer th:replace="frags :: footer"></footer>
 </body>
 </html>

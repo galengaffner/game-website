@@ -8,6 +8,7 @@ public class PlayoffMatchup {
     private Integer matchupID;
     private Integer team1FromId;
     private Integer team2FromId;
+    private boolean isComplete;
 
     public PlayoffMatchup(Team team1, Team team2, Integer winsNeeded, Integer round, Integer matchupID) {
         this.team1 = team1;
@@ -17,6 +18,7 @@ public class PlayoffMatchup {
         this.matchupID = matchupID;
         team1FromId = 0;
         team2FromId = 0;
+        isComplete = false;
         setHeadstart();
     }
 
@@ -26,6 +28,15 @@ public class PlayoffMatchup {
         this.matchupID = matchupID;
         this.team1FromId = team1FromId;
         this.team2FromId = team2FromId;
+        isComplete = false;
+    }
+
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(boolean complete) {
+        isComplete = complete;
     }
 
     public Team getTeam1() {
@@ -74,14 +85,10 @@ public class PlayoffMatchup {
         return team2FromId;
     }
 
-    public Team isSeriesFinished() {
-        if(team1.playoffWins >= winsNeeded) return team1;
-        else if(team2.playoffWins >= winsNeeded) return team2;
-        else return null;
-    }
-
     private void setHeadstart(){
         if(team1 == null || team2 == null) return;
+        team1.playoffWins = 0;
+        team2.playoffWins = 0;
         if(team1.wins > team2.wins) {
             team1.playoffWins = team1.wins - team2.wins;
             if(team1.playoffWins > (winsNeeded - 1)) team1.playoffWins = winsNeeded - 1;
